@@ -1,0 +1,21 @@
+FROM php:7.4-fpm
+
+WORKDIR /var/www
+
+RUN apt-get update && apt-get -f -y install unzip wget
+
+RUN apt-get update && apt-get install -y \
+   build-essential \
+   locales \
+   zip \
+   vim \
+   unzip \
+   git \
+   curl
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+RUN mkdir /var/www/storage && chmod -R 777 /var/www/storage
+RUN mkdir -p /var/www/bootstrap/cache && chmod -R 777 /var/www/bootstrap/cache
+
+RUN chown -R www-data:www-data /var/www
